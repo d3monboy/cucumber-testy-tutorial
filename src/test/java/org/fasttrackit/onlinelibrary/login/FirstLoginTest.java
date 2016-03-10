@@ -18,7 +18,7 @@ public class FirstLoginTest extends TestBase {
 
     @Test
     protected void validLoginTest() {
-       openLogInPage();
+        openLogInPage();
         doLogin("eu@fast.com", "eu.pass");
 
         try {
@@ -29,15 +29,18 @@ public class FirstLoginTest extends TestBase {
         }
     }
 
-      @Test
+    @Test
     public void WhenEnterInvalidPasswordGetErrorMessage() {
+        openLogInPage();
+        doLogin("eu@fast.com", "wrong.pass");
+        assertThaterrorIs("Invalid user or password!");
+    }
 
-        openLogInPage ();
-        doLogin ("eu@fast.com", "wrong.pass");
-
-        WebElement errormsg = driver.findElement(By.className("error-msg"));
-        System.out.println(errormsg.getText());
-        assertThat(errormsg.getText(), is("Invalid user or password!"));
+    @Test
+    public void WhenEnterOnlyEmailGetErrorMessage() {
+        openLogInPage();
+        doLogin("eu@fast.com", "");
+        assertThaterrorIs("Please enter your password!");
     }
 
     private void doLogin(String userName, String password) {
@@ -57,18 +60,10 @@ public class FirstLoginTest extends TestBase {
 
     }
 
-
-    @Test
-    public void WhenEnterOnlyEmailGetErrorMessage() {
-
-        openLogInPage ();
-        doLogin ("eu@fast.com", "");
-
+    private void assertThaterrorIs(String message) {
         WebElement errormsg = driver.findElement(By.className("error-msg"));
         System.out.println(errormsg.getText());
-        assertThat(errormsg.getText(), is("Please enter your password!"));
+        assertThat(errormsg.getText(), is(message));
     }
-
-
 
 }
