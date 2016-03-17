@@ -2,10 +2,12 @@ package org.fasttrackit.onlinelibrary.login;
 
 
 import com.sdl.selenium.web.utils.Utils;
+import org.fasttrackit.exemple.LoginPage;
 import org.fasttrackit.util.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,12 +17,20 @@ import static org.hamcrest.core.Is.is;
 /**
  * Created by mihai on 3/7/2016.
  */
-public class FirstLoginTest extends TestBase {
+    public class FirstLoginTest extends TestBase {
+
+    private LoginPage LoginPage;
+
+    public FirstLoginTest() {
+        LoginPage = PageFactory.initElements(driver, LoginPage.class);
+    }
+
+
 
     @Test
     protected void validLoginTest() {
         openLogInPage();
-        doLogin("eu@fast.com", "eu.pass");
+        LoginPage.doLogin("eu@fast.com", "eu.pass");
 
         try {
             WebElement logoutBtn = driver.findElement(By.linkText("Logout"));
@@ -33,22 +43,22 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void WhenEnterInvalidPasswordGetErrorMessage() {
         openLogInPage();
-        doLogin("eu@fast.com", "wrong.pass");
-        assertThaterrorIs("Invalid user or password!");
+        LoginPage.doLogin("eu@fast.com", "wrong.pass");
+        LoginPage.assertThaterrorIs("Invalid user or password!");
     }
 
     @Test
     public void WhenEnterOnlyEmailGetErrorMessage() {
         openLogInPage();
-        doLogin("eu@fast.com", "");
-        assertThaterrorIs("Please enter your password!");
+        LoginPage.doLogin("eu@fast.com", "");
+        LoginPage.assertThaterrorIs("Please enter your password!");
     }
 
 
     @Test
     public void succesChangePassword(){
         openLogInPage();
-        doLogin("eu@fast.com", "eu.pass");
+        LoginPage.doLogin("eu@fast.com", "eu.pass");
 
 
         WebElement preferenceButton = driver.findElement(By.xpath("//nav//button"));
@@ -74,7 +84,7 @@ public class FirstLoginTest extends TestBase {
         assertThat(statusElement.getText(), is("Your password has been successfully changed."));
     }
 
-
+    @Deprecated
     private void doLogin(String userName, String password) {
         WebElement emailField = driver.findElement(By.id("email"));
         emailField.sendKeys(userName);
@@ -92,10 +102,6 @@ public class FirstLoginTest extends TestBase {
 
     }
 
-    private void assertThaterrorIs(String message) {
-        WebElement errormsg = driver.findElement(By.className("error-msg"));
-        System.out.println(errormsg.getText());
-        assertThat(errormsg.getText(), is(message));
-    }
+
 
 }
