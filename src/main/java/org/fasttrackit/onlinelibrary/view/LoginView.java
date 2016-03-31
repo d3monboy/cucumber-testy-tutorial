@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 
 public class LoginView extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
-    
+
+
     public LoginView() {
         setClasses("login");
     }
@@ -28,7 +29,7 @@ public class LoginView extends WebLocator {
     private WebLocator invalidUserErrorElement = new WebLocator().setText("Invalid username");
     private WebLocator userNotFoundErrorElement = new WebLocator().setText("A user could not be found with this email address.");
 
-    public void login(String user, String pass) {
+    public void doLogin(String user, String pass) {
         userNameField.setValue(user);
         fakePasswordField.click(); // this is how ui is implemented
         passwordField.setValue(pass);
@@ -38,4 +39,7 @@ public class LoginView extends WebLocator {
     public static void main(String[] args) {
         WebLocatorUtils.getXPathScript(new LoginView());
     }
+
+
+
 }

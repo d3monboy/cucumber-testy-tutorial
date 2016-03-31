@@ -44,3 +44,12 @@ Feature: Customer I can login to web site
 
   Scenario: Force logout
     Then I click on link with text "Log Out"
+
+
+
+
+    Scenario: add 2 numbers
+      Given I enter the first number
+      And I enter the second number
+      When I press add
+      Then I should see the correct result
