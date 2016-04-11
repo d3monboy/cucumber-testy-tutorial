@@ -2,13 +2,15 @@ package org.fasttrackit.onlinelibrary.login;
 
 
 
-import org.fasttrackit.exemple.ChangePasswordPage;
+import org.fasttrackit.exemple.ChangePasswordView;
 import org.fasttrackit.exemple.LoginPage;
 import org.fasttrackit.exemple.NavigationBarPage;
 import org.fasttrackit.forms.FirstFormView;
 import org.fasttrackit.util.TestBase;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
+
+import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -18,13 +20,12 @@ public class ChangePasswordTest extends TestBase {
 
 
     private LoginPage loginPage;
-    private ChangePasswordPage changePasswordPage;
+    private ChangePasswordView changePasswordPage = new ChangePasswordView();
     private NavigationBarPage navigationBarPage;
 
 
     public ChangePasswordTest() {
         loginPage = PageFactory.initElements(driver, LoginPage.class);
-        changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
         navigationBarPage = PageFactory.initElements(driver, NavigationBarPage.class);
     }
 
@@ -55,7 +56,7 @@ public class ChangePasswordTest extends TestBase {
         loginPage.doLogin("eu@fast.com", "eu.pass");
 
         FirstFormView form = new FirstFormView();
-        form.datePicker.select("25.03.2016");
+        form.datePicker.select("25/9/2015", "dd/MM/yyyy", Locale.ENGLISH);
     }
 
 
