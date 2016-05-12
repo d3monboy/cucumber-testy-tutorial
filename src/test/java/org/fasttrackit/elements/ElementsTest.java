@@ -10,15 +10,19 @@ import com.sdl.selenium.web.form.TextField;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.Utils;
 import org.fasttrackit.exemple.DropDownList;
-import org.fasttrackit.exemple.SenchaExampleView;
 import org.fasttrackit.exemple.MultiSelectDropDownList;
+import org.fasttrackit.exemple.SenchaExampleView;
 import org.fasttrackit.forms.FirstFormView;
 import org.fasttrackit.util.TestBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 
 public class ElementsTest extends TestBase {
@@ -140,6 +144,23 @@ public class ElementsTest extends TestBase {
         resizableEast.mouseOver();
         (new Actions(WebDriverConfig.getDriver())).dragAndDropBy(resizableEast.currentElement, 300, 0).build().perform();
 
+
+
+    }
+
+    @Test
+
+    public void iterationThrouElements() {
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/classic/view/data-view.html");
+
+        WebLocator img = new WebLocator().setElCssSelector("#dataview-example img");
+        img.ready();
+
+        List<WebElement> images = driver.findElements(By.cssSelector("#dataview-exemple img"));
+        for (WebElement image : images) {
+            String title = image.getAttribute("title");
+            LOGGER.debug(title);
+        }
 
 
     }
